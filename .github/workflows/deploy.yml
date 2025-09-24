@@ -1,31 +1,37 @@
 name: Deploy Static Website to S3
+
 on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your repository
+      
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Configure AWS credentials
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: sa-east-1  
+          aws-region: sa-east-1
 
-      - name: Sync files to S3
-        run: |
-          aws s3 sync . s3://car-website16 --delete --acl public-read
+      
+      - name: Upload website to S3
+       run: |
+          aws s3 sync ./ s3://car-website16 --acl public-read --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*"
 
-          
 
-      - name: Sync files to S3
-        run: |
-          aws s3 sync . s3://my-static-site-demo --delete --acl public-read
+
+        
+          aws s3 sync ./ s3://car-website16 --acl public-read --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*"
