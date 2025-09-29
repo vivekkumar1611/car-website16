@@ -3,7 +3,7 @@ name: Deploy Website to S3
 on:
   push:
     branches:
-      - main
+      - main   
 
 jobs:
   deploy:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
       
-      - name: Checkout source code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       
@@ -20,7 +20,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: sa-east-1   
+          aws-region: sa-east-1  # change if your bucket is in another region
 
       - name: Sync files to S3
         run: |
